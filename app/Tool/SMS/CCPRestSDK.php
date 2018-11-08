@@ -24,6 +24,7 @@ class CCPRestSDK {
 		$this->ServerIP = $ServerIP;
 		$this->ServerPort = $ServerPort;
 		$this->SoftVersion = $SoftVersion;
+        $this->Filename = storage_path('logs/sms.log');
         $this->Handle = fopen($this->Filename, 'a');
 	}
 

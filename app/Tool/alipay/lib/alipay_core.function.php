@@ -16,12 +16,16 @@
  */
 function createLinkstring($para) {
 	$arg  = "";
-	while (list ($key, $val) = each ($para)) {
-		$arg.=$key."=".$val."&";
-	}
+//	while (list ($key, $val) = each ($para)) {
+//		$arg.=$key."=".$val."&";
+//	}
+	foreach ($para as $key=>$val) {
+        $arg .= $key."=".$val."&";
+    }
 	//去掉最后一个&字符
-	$arg = substr($arg,0,count($arg)-2);
-	
+    //$arg = substr($arg,0,mb_strlen($arg)-2);
+    $arg = rtrim($arg,'&');
+
 	//如果存在转义字符，那么去掉转义
 	if(get_magic_quotes_gpc()){$arg = stripslashes($arg);}
 	
@@ -52,10 +56,15 @@ function createLinkstringUrlencode($para) {
  */
 function paraFilter($para) {
 	$para_filter = array();
-	while (list ($key, $val) = each ($para)) {
-		if($key == "sign" || $key == "sign_type" || $val == "")continue;
-		else	$para_filter[$key] = $para[$key];
-	}
+//	while (list ($key, $val) = each ($para)) {
+//		if($key == "sign" || $key == "sign_type" || $val == "")continue;
+//		else	$para_filter[$key] = $para[$key];
+//	}
+	foreach($para as $key=>$val) {
+        if($key == "sign" || $key == "sign_type" || $val == "")continue;
+        else	$para_filter[$key] = $para[$key];
+    }
+
 	return $para_filter;
 }
 /**
@@ -74,7 +83,8 @@ function argSort($para) {
  * @param $word 要写入日志里的文本内容 默认值：空值
  */
 function logResult($word='') {
-	$fp = fopen("log.txt","a");
+    $logpath = storage_path('logs/alipay.log');
+	$fp = fopen($logpath,"a");
 	flock($fp, LOCK_EX) ;
 	fwrite($fp,"执行日期：".strftime("%Y%m%d%H%M%S",time())."\n".$word."\n");
 	flock($fp, LOCK_UN);

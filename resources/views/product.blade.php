@@ -4,6 +4,7 @@
 
 @section('content')
 <div class="weui_cells weui_cells_access">
+    @if (count($products) > 0 )
     @foreach($products as $product)
     <a class="weui_cell" href="/product/{{$product->id}}">
         <div class="weui_cell_hd"><img class="bk_preview" src="{{$product->preview}}"></div>
@@ -18,6 +19,10 @@
         <div class="weui_cell_ft"></div>
     </a>
     @endforeach
+    @else
+        <div>暂无该类别数据</div>
+    @endif
+
 </div>
 @endsection
 

@@ -159,6 +159,7 @@
       cache: false,
       data: {phone: phone, _token: "{{csrf_token()}}"},
       success: function(data) {
+          console.log(data);
         if(data == null) {
           $('.bk_toptips').show();
           $('.bk_toptips span').html('服务端错误');

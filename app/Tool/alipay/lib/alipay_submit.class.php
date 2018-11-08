@@ -21,6 +21,7 @@ class AlipaySubmit {
 	 */
 	//var $alipay_gateway_new = 'https://mapi.alipay.com/gateway.do?';
 	var $alipay_gateway_new = 'http://wappaygw.alipay.com/service/rest.htm?';
+    //var $alipay_gateway_new = 'https://openapi.alipaydev.com/gateway.do?';
 
 	function __construct($alipay_config){
 		$this->alipay_config = $alipay_config;
@@ -37,7 +38,7 @@ class AlipaySubmit {
 	function buildRequestMysign($para_sort) {
 		//把数组所有元素，按照“参数=参数值”的模式用“&”字符拼接成字符串
 		$prestr = createLinkstring($para_sort);
-		
+
 		$mysign = "";
 		switch (strtoupper(trim($this->alipay_config['sign_type']))) {
 			case "MD5" :
@@ -70,7 +71,7 @@ class AlipaySubmit {
 
 		//生成签名结果
 		$mysign = $this->buildRequestMysign($para_sort);
-		
+
 		//签名结果与签名方式加入请求提交参数组中
 		$para_sort['sign'] = $mysign;
 		if($para_sort['service'] != 'alipay.wap.trade.create.direct' && $para_sort['service'] != 'alipay.wap.auth.authAndExecute') {
